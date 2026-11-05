@@ -1,0 +1,253 @@
+/* ────────────────────────────────────────────────────────────
+   shell.css — 복사본. 여기서 고치지 말 것.
+
+   원본: korean-cards/shared/shell.css
+   고친 뒤  python tools/sync_shared.py  를 돌리면 두 앱에 퍼진다.
+   sha256 5278d6971194dda0
+   ──────────────────────────────────────────────────────────── */
+/* 한국어 with Youjin — 모든 앱이 공유하는 상단 바와 꼬리말.
+   css/tokens.css 를 먼저 불러야 한다.
+
+   본문 폭은 앱마다 다르므로 --shell-width 로 받는다. 헤더 안쪽이 본문과
+   어긋나면 브랜드가 내용과 다른 선에 놓여서 바가 떠 보인다.
+   달력은 :root { --shell-width: 480px } 을 따로 깐다. */
+:root {
+  --shell-width: 640px;
+}
+
+.site-header,
+.site-footer {
+  font-family: var(--font-app);
+  font-synthesis: none; /* Jua 는 굵기가 하나뿐 — 가짜 볼드 방지 */
+}
+
+.site-inner {
+  width: 100%;
+  max-width: var(--shell-width);
+  margin: 0 auto;
+  padding: 0 var(--space-6);
+}
+
+/* ---------- 상단 바 ---------- */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: color-mix(in srgb, var(--bg) 82%, transparent);
+  -webkit-backdrop-filter: saturate(1.4) blur(14px);
+  backdrop-filter: saturate(1.4) blur(14px);
+  border-bottom: 1px solid var(--line);
+}
+.site-header .site-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-5);
+  min-height: 60px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  color: var(--ink);
+  text-decoration: none;
+  min-width: 0;
+}
+
+/* 브랜드 마크는 마스코트 이응. 정사각 칸 + 정사각 symbol viewBox 라
+   preserveAspectRatio 가 손댈 일이 없다. margin 으로 위치를 밀지 않는다. */
+.brand-mark {
+  display: block;
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  border-radius: var(--radius-full);
+  background: var(--sky);
+  overflow: hidden;
+}
+.brand-mark svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.brand-mark.sm {
+  width: 32px;
+  height: 32px;
+}
+
+.brand-text {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 800;
+  line-height: 1.1;
+  white-space: nowrap;
+}
+.brand-text small {
+  display: block;
+  font-weight: 600;
+  font-size: 0.7rem;
+  color: var(--muted);
+}
+.brand-text em,
+.foot-brand em {
+  font-style: normal;
+  font-size: 0.78em;
+  color: var(--primary);
+}
+
+/* ---------- 햄버거 ---------- */
+.menu {
+  position: relative;
+  flex-shrink: 0;
+}
+.menu-btn {
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  cursor: pointer;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  display: grid;
+  place-items: center;
+}
+.menu-btn .bars,
+.menu-btn .bars::before,
+.menu-btn .bars::after {
+  display: block;
+  width: 18px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--ink);
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+.menu-btn .bars {
+  position: relative;
+}
+.menu-btn .bars::before,
+.menu-btn .bars::after {
+  content: "";
+  position: absolute;
+  left: 0;
+}
+.menu-btn .bars::before { top: -6px; }
+.menu-btn .bars::after  { top: 6px; }
+
+/* 열리면 그 자리에서 X 가 된다. 아이콘을 두 벌 두지 않는다. */
+.menu-btn[aria-expanded="true"] .bars { background: transparent; }
+.menu-btn[aria-expanded="true"] .bars::before { transform: translateY(6px) rotate(45deg); }
+.menu-btn[aria-expanded="true"] .bars::after  { transform: translateY(-6px) rotate(-45deg); }
+
+.site-nav {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 1;
+  min-width: 212px;
+  padding: var(--space-2);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+}
+.site-nav a {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-5);
+  min-height: 44px;
+  padding: var(--space-4) var(--space-5);
+  border-radius: var(--radius-sm);
+  color: var(--ink);
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+.site-nav a small {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+.site-nav a:hover { background: var(--bg); }
+.site-nav a.active { color: var(--primary); background: var(--bg); }
+
+/* ---------- 꼬리말 ---------- */
+.site-footer {
+  margin-top: var(--space-9);
+  padding: var(--space-8) 0 calc(var(--space-8) + env(safe-area-inset-bottom, 0px));
+  background: var(--surface);
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 0.8rem;
+  line-height: 1.55;
+}
+.site-footer .site-inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+.foot-brand {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-4);
+}
+.foot-brand b {
+  display: block;
+  color: var(--ink);
+  font-size: 0.95rem;
+  font-weight: 800;
+}
+.foot-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+.foot-links a {
+  color: var(--ink);
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.8rem;
+  padding: var(--space-3) var(--space-5);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-full);
+}
+.foot-links a:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+.foot-legal {
+  margin: 0;
+  font-size: 0.74rem;
+}
+.foot-copy {
+  margin: 0;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+  font-size: 0.74rem;
+  font-weight: 700;
+}
+
+/* ---------- 포커스 ---------- */
+.menu-btn:focus-visible,
+.site-nav a:focus-visible,
+.brand:focus-visible,
+.foot-links a:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 2px;
+}
+
+@media (min-width: 600px) {
+  .site-footer .site-inner {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: start;
+  }
+  .foot-legal,
+  .foot-copy {
+    grid-column: 1 / -1;
+  }
+}

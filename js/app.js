@@ -416,22 +416,3 @@ renderPanel();
 renderYear();
 startQuiz();
 $("footYear").textContent = new Date().getFullYear();
-
-/* ---------- 햄버거 메뉴 ---------- */
-function setMenu(open) {
-  $("menuBtn").setAttribute("aria-expanded", open);
-  $("menuBtn").setAttribute("aria-label", open ? "메뉴 닫기 / Close menu" : "메뉴 열기 / Open menu");
-  $("siteNav").hidden = !open;
-}
-$("menuBtn").addEventListener("click", () => setMenu($("siteNav").hidden));
-// 메뉴 바깥을 누르면 닫기
-document.addEventListener("click", (e) => {
-  if (!$("siteNav").hidden && !e.target.closest(".menu")) setMenu(false);
-});
-// Esc로 닫고 버튼으로 포커스 돌려주기
-document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape" && !$("siteNav").hidden) {
-    setMenu(false);
-    $("menuBtn").focus();
-  }
-});

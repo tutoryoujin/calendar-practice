@@ -1,87 +1,13 @@
+/* ============================================================
+   한국어 달력 — 이 앱에만 있는 스타일.
+
+   토큰은 css/tokens.css, 헤더·푸터·메뉴는 css/shell.css 에 있다.
+   둘 다 카드 앱과 공유하는 복사본이라 여기서 고치지 않는다.
+   원본은 korean-cards/shared/ 에 있다.
+   ============================================================ */
 :root {
-  --bg: #eef1f8;
-  --ink: #26304a;
-  --muted: #6b7590;
-  --surface: #ffffff;
-  --line: #d8deeb;
-  --primary: #3550c8;
-  --primary-ink: #ffffff;
-  --shadow: 0 14px 30px -12px rgba(38, 48, 74, 0.28);
-
-  --sun: #d2384b;
-  --sat: #2f62c9;
-  --ok-bg: #cdefe2;
-  --ok-ink: #1f5e48;
-  --bad-bg: #ffd2c4;
-  --bad-ink: #8a2e14;
-
-  --year-bg: #cfe0fa;
-  --year-ink: #1f4a86;
-  --month-bg: #ffd3e2;
-  --month-ink: #8a1f4c;
-  --day-bg: #cdefe2;
-  --day-ink: #1f5e48;
-  --week-bg: #ffe9a8;
-  --week-ink: #6a4a00;
-  --special: #ffb800;
-
-  color-scheme: light;
-  padding-top: env(safe-area-inset-top, 0px);
-  padding-bottom: env(safe-area-inset-bottom, 0px);
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg: #161a24;
-    --ink: #e8ecf5;
-    --muted: #9aa3ba;
-    --surface: #222838;
-    --line: #343b4e;
-    --primary: #7c93ff;
-    --primary-ink: #10142a;
-    --shadow: 0 14px 30px -12px rgba(0, 0, 0, 0.6);
-    --sun: #ff8a96;
-    --sat: #8db2ff;
-    --ok-bg: #173f33;
-    --ok-ink: #a6ebd2;
-    --bad-bg: #4d2418;
-    --bad-ink: #ffb9a3;
-    --year-bg: #1d3150;
-    --year-ink: #b4d0ff;
-    --month-bg: #4e2234;
-    --month-ink: #ffb8d0;
-    --day-bg: #173f33;
-    --day-ink: #a6ebd2;
-    --week-bg: #4a3b12;
-    --week-ink: #ffdf8a;
-    --special: #ffd45c;
-    color-scheme: dark;
-  }
-}
-:root[data-theme="dark"] {
-  --bg: #161a24;
-  --ink: #e8ecf5;
-  --muted: #9aa3ba;
-  --surface: #222838;
-  --line: #343b4e;
-  --primary: #7c93ff;
-  --primary-ink: #10142a;
-  --shadow: 0 14px 30px -12px rgba(0, 0, 0, 0.6);
-  --sun: #ff8a96;
-  --sat: #8db2ff;
-  --ok-bg: #173f33;
-  --ok-ink: #a6ebd2;
-  --bad-bg: #4d2418;
-  --bad-ink: #ffb9a3;
-  --year-bg: #1d3150;
-  --year-ink: #b4d0ff;
-  --month-bg: #4e2234;
-  --month-ink: #ffb8d0;
-  --day-bg: #173f33;
-  --day-ink: #a6ebd2;
-  --week-bg: #4a3b12;
-  --week-ink: #ffdf8a;
-  --special: #ffd45c;
-  color-scheme: dark;
+  /* 본문이 480px 이라 헤더 안쪽도 같은 폭으로 맞춘다 */
+  --shell-width: 480px;
 }
 
 *,
@@ -103,7 +29,8 @@ body {
   flex-direction: column;
   background: var(--bg);
   color: var(--ink);
-  font-family: "Nunito", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+  font-family: var(--font-app);
+  font-synthesis: none; /* Jua 는 굵기가 하나뿐 — 가짜 볼드 방지 */
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
 }
@@ -112,7 +39,7 @@ button {
   color: inherit;
 }
 .jua {
-  font-family: "Jua", "Apple SD Gothic Neo", sans-serif;
+  font-family: var(--font-display);
   font-weight: 400;
 }
 
@@ -125,241 +52,6 @@ button {
   padding: 16px 16px 0;
   max-width: 480px;
   margin: 0 auto;
-}
-
-/* ============================================================
-   Site header / footer — 한국어 카드(materials) 사이트와 같은 디자인
-   ============================================================ */
-.site-header,
-.site-footer {
-  font-family: "Nunito", "Jua", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
-  font-synthesis: none; /* Jua는 굵기 1개뿐 — 가짜 볼드 방지 */
-}
-.site-inner {
-  width: 100%;
-  max-width: 480px;
-  margin: 0 auto;
-  padding: 0 16px;
-}
-
-.site-header {
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  background: color-mix(in srgb, var(--bg) 82%, transparent);
-  -webkit-backdrop-filter: saturate(1.4) blur(14px);
-  backdrop-filter: saturate(1.4) blur(14px);
-  border-bottom: 1px solid var(--line);
-}
-.site-header .site-inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  min-height: 60px;
-}
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  color: var(--ink);
-  text-decoration: none;
-  min-width: 0;
-}
-.brand-mark {
-  width: 36px;
-  height: 36px;
-  flex-shrink: 0;
-  border-radius: 11px;
-  display: grid;
-  place-items: center;
-  background: var(--primary);
-  color: var(--primary-ink);
-  font-weight: 800;
-  font-size: 1.1rem;
-  box-shadow: 0 6px 14px -6px var(--primary);
-}
-.brand-mark.sm {
-  width: 32px;
-  height: 32px;
-  border-radius: 10px;
-  font-size: 1rem;
-  box-shadow: none;
-}
-.brand-text {
-  margin: 0;
-  font-size: 1.05rem;
-  font-weight: 800;
-  line-height: 1.1;
-  white-space: nowrap;
-}
-.brand-text small {
-  display: block;
-  font-weight: 600;
-  font-size: 0.7rem;
-  color: var(--muted);
-}
-.brand-text em,
-.foot-brand em {
-  font-style: normal;
-  font-size: 0.78em;
-  color: var(--primary);
-}
-/* 햄버거 메뉴 */
-.menu {
-  position: relative;
-  flex-shrink: 0;
-}
-.menu-btn {
-  width: 44px;
-  height: 44px;
-  border-radius: 12px;
-  border: 1px solid var(--line);
-  background: var(--surface);
-  cursor: pointer;
-  display: grid;
-  place-items: center;
-  padding: 0;
-}
-.menu-btn .bars,
-.menu-btn .bars::before,
-.menu-btn .bars::after {
-  display: block;
-  width: 18px;
-  height: 2px;
-  border-radius: 2px;
-  background: var(--ink);
-  transition: transform 0.2s ease, background 0.2s ease;
-}
-.menu-btn .bars {
-  position: relative;
-}
-.menu-btn .bars::before,
-.menu-btn .bars::after {
-  content: "";
-  position: absolute;
-  left: 0;
-}
-.menu-btn .bars::before {
-  top: -6px;
-}
-.menu-btn .bars::after {
-  top: 6px;
-}
-/* 열리면 X 모양 */
-.menu-btn[aria-expanded="true"] .bars {
-  background: transparent;
-}
-.menu-btn[aria-expanded="true"] .bars::before {
-  transform: translateY(6px) rotate(45deg);
-}
-.menu-btn[aria-expanded="true"] .bars::after {
-  transform: translateY(-6px) rotate(-45deg);
-}
-.menu-btn:focus-visible {
-  outline: 3px solid var(--primary);
-  outline-offset: 2px;
-}
-
-.site-nav {
-  position: absolute;
-  top: calc(100% + 8px);
-  right: 0;
-  min-width: 200px;
-  padding: 6px;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: 16px;
-  box-shadow: var(--shadow);
-}
-.site-nav a {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 12px;
-  min-height: 44px;
-  padding: 10px 12px;
-  border-radius: 10px;
-  color: var(--ink);
-  text-decoration: none;
-  font-weight: 700;
-  font-size: 0.95rem;
-}
-.site-nav a small {
-  font-size: 0.7rem;
-  font-weight: 600;
-  color: var(--muted);
-}
-.site-nav a:hover {
-  background: var(--bg);
-}
-.site-nav a.active {
-  color: var(--primary);
-  background: var(--bg);
-}
-.site-nav a:focus-visible,
-.brand:focus-visible,
-.foot-links a:focus-visible {
-  outline: 3px solid var(--primary);
-  outline-offset: 2px;
-}
-
-.site-footer {
-  margin-top: 36px;
-  padding: 28px 0 calc(28px + env(safe-area-inset-bottom, 0px));
-  background: var(--surface);
-  border-top: 1px solid var(--line);
-  color: var(--muted);
-  font-size: 0.8rem;
-  line-height: 1.55;
-}
-.site-footer .site-inner {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-.foot-brand {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-}
-.foot-brand b {
-  display: block;
-  color: var(--ink);
-  font-size: 0.95rem;
-  font-weight: 800;
-}
-.foot-links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-.foot-links a {
-  color: var(--ink);
-  text-decoration: none;
-  font-weight: 700;
-  font-size: 0.8rem;
-  padding: 8px 12px;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-}
-.foot-links a:hover {
-  border-color: var(--primary);
-  color: var(--primary);
-}
-.foot-legal {
-  margin: 0;
-  font-size: 0.74rem;
-}
-.foot-copy {
-  margin: 0;
-  padding-top: 14px;
-  border-top: 1px solid var(--line);
-  font-size: 0.74rem;
-  font-weight: 700;
 }
 
 .tabs {
@@ -384,7 +76,7 @@ button {
   line-height: 1.1;
 }
 .tab .ko {
-  font-family: "Jua", sans-serif;
+  font-family: var(--font-display);
   font-size: 1rem;
 }
 .tab .en {
@@ -412,7 +104,7 @@ button {
 .box {
   background: var(--surface);
   border-radius: 24px;
-  box-shadow: var(--shadow);
+  box-shadow: var(--shadow-card);
   padding: 16px;
 }
 
@@ -429,7 +121,7 @@ button {
   flex: 1;
 }
 .month-title .digits {
-  font-family: "Jua", sans-serif;
+  font-family: var(--font-display);
   font-size: 1.5rem;
   line-height: 1.1;
 }
@@ -468,7 +160,7 @@ button {
   padding: 2px 0;
 }
 .wd .ko {
-  font-family: "Jua", sans-serif;
+  font-family: var(--font-display);
   font-size: 1rem;
   display: block;
 }
@@ -514,7 +206,7 @@ button {
 }
 .cell.today::after {
   content: "오늘";
-  font-family: "Jua", sans-serif;
+  font-family: var(--font-display);
   font-size: 0.58rem;
   color: var(--primary);
   line-height: 1;
@@ -558,7 +250,7 @@ button {
   gap: 8px;
 }
 .today-btn .ko {
-  font-family: "Jua", sans-serif;
+  font-family: var(--font-display);
 }
 .today-btn .en {
   font-size: 0.75rem;
@@ -568,7 +260,7 @@ button {
 
 /* Reading panel */
 .panel-digits {
-  font-family: "Jua", sans-serif;
+  font-family: var(--font-display);
   font-size: 1.6rem;
   text-align: center;
   margin: 2px 0 12px;
@@ -593,24 +285,24 @@ button {
   opacity: 0.75;
 }
 .seg span {
-  font-family: "Jua", sans-serif;
+  font-family: var(--font-display);
   font-size: 1.35rem;
 }
 .seg-year {
-  background: var(--year-bg);
-  color: var(--year-ink);
+  background: var(--cal-year-bg);
+  color: var(--cal-year-ink);
 }
 .seg-month {
-  background: var(--month-bg);
-  color: var(--month-ink);
+  background: var(--cal-month-bg);
+  color: var(--cal-month-ink);
 }
 .seg-day {
-  background: var(--day-bg);
-  color: var(--day-ink);
+  background: var(--cal-day-bg);
+  color: var(--cal-day-ink);
 }
 .seg-week {
-  background: var(--week-bg);
-  color: var(--week-ink);
+  background: var(--cal-week-bg);
+  color: var(--cal-week-ink);
 }
 .special {
   box-shadow: 0 0 0 3px var(--special);
@@ -649,7 +341,7 @@ button {
   border: 1px solid var(--line);
 }
 .tag b {
-  font-family: "Jua", sans-serif;
+  font-family: var(--font-display);
   font-weight: 400;
   font-size: 1rem;
 }
@@ -667,7 +359,7 @@ button {
   line-height: 1.5;
 }
 .note .ko {
-  font-family: "Jua", sans-serif;
+  font-family: var(--font-display);
   font-size: 1rem;
   display: block;
 }
@@ -689,7 +381,7 @@ button {
   line-height: 1.2;
 }
 .btn .ko {
-  font-family: "Jua", sans-serif;
+  font-family: var(--font-display);
   font-size: 1.1rem;
 }
 .btn .en {
@@ -717,7 +409,7 @@ button {
   margin-bottom: 10px;
 }
 .score b {
-  font-family: "Jua", sans-serif;
+  font-family: var(--font-display);
   font-weight: 400;
   color: var(--ink);
   font-size: 1rem;
@@ -729,13 +421,13 @@ button {
   font-size: 0.85rem;
 }
 .q-label .ko {
-  font-family: "Jua", sans-serif;
+  font-family: var(--font-display);
   font-size: 1rem;
   color: var(--ink);
   display: block;
 }
 .q-date {
-  font-family: "Jua", sans-serif;
+  font-family: var(--font-display);
   font-size: clamp(2.6rem, 14vw, 3.4rem);
   text-align: center;
   margin: 10px 0 16px;
@@ -749,7 +441,7 @@ button {
   border-radius: 16px;
   border: 2px solid var(--line);
   background: var(--surface);
-  font-family: "Jua", sans-serif;
+  font-family: var(--font-display);
   font-size: 1.25rem;
   cursor: pointer;
   padding: 8px;
@@ -773,7 +465,7 @@ button {
   line-height: 1.4;
 }
 .feedback .ko {
-  font-family: "Jua", sans-serif;
+  font-family: var(--font-display);
   font-size: 1.2rem;
   display: block;
 }
@@ -788,13 +480,13 @@ button {
   text-align: center;
 }
 .year-pick .big {
-  font-family: "Jua", sans-serif;
+  font-family: var(--font-display);
   font-size: 2.6rem;
   line-height: 1.1;
   margin: 4px 0;
 }
 .year-pick .big.special-text {
-  color: var(--month-ink);
+  color: var(--cal-month-ink);
 }
 .year-pick .sub {
   font-weight: 700;
@@ -825,7 +517,7 @@ button {
   border: 2px solid transparent;
   border-radius: 18px;
   background: var(--surface);
-  box-shadow: var(--shadow);
+  box-shadow: var(--shadow-card);
   padding: 10px 8px 8px;
   cursor: pointer;
   text-align: center;
@@ -839,13 +531,13 @@ button {
 }
 .mcard.now .mname::after {
   content: " · 이번 달";
-  font-family: "Nunito", sans-serif;
+  font-family: var(--font-app);
   font-size: 0.62rem;
   font-weight: 800;
   color: var(--primary);
 }
 .mname {
-  font-family: "Jua", sans-serif;
+  font-family: var(--font-display);
   font-size: 1.3rem;
   line-height: 1.1;
 }
@@ -872,7 +564,7 @@ button {
 }
 .mini .h {
   color: var(--muted);
-  font-family: "Jua", sans-serif;
+  font-family: var(--font-display);
   font-weight: 400;
 }
 .mini .s,
@@ -903,13 +595,13 @@ button {
   text-align: center;
 }
 .result-score {
-  font-family: "Jua", sans-serif;
+  font-family: var(--font-display);
   font-size: 3rem;
   line-height: 1.1;
   margin: 8px 0 4px;
 }
 .result-msg .ko {
-  font-family: "Jua", sans-serif;
+  font-family: var(--font-display);
   font-size: 1.3rem;
   display: block;
 }
@@ -936,7 +628,7 @@ button {
   font-weight: 700;
 }
 .missed li b {
-  font-family: "Jua", sans-serif;
+  font-family: var(--font-display);
   font-weight: 400;
   color: var(--ok-ink);
 }
