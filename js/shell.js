@@ -3,16 +3,20 @@
 
    원본: korean-cards/shared/shell.js
    고친 뒤  python tools/sync_shared.py  를 돌리면 두 앱에 퍼진다.
-   sha256 4c2c40d9070ef0e9
+   sha256 da2664847509d92f
    ──────────────────────────────────────────────────────────── */
-/* 한국어 with Youjin — 모든 앱이 공유하는 셸 동작.
-   마스코트 도형 주입 + 햄버거 메뉴. 다른 스크립트보다 먼저 부른다.
+/* 한국어 with Youjin — 모든 앱이 공유하는 셸.
+   마스코트 도형 · 헤더 · 푸터 · 햄버거. 다른 스크립트보다 먼저 부른다.
 
-   헤더·푸터의 마크업 자체는 앱마다 index.html 에 직접 적는다.
-   달력은 정적 페이지고 카드는 해시 라우팅이라 생성 방식이 달라서,
-   한쪽에 맞추면 다른 쪽이 손해를 본다. 대신 구조는 디자인 시스템의
-   SiteHeader / SiteFooter 카드를 그대로 베낀다. */
-(function () {
+   마크업까지 여기서 만든다. 앱마다 index.html 에 따로 적어 두면
+   한쪽만 고치고 끝내게 되고, 실제로 그렇게 갈라졌다.
+   앱이 다른 부분은 YJ.config() 로만 받는다.
+
+   정적 페이지는 <div id="siteHeader"> / <div id="siteFooter"> 를 두고
+   YJ.mount() 를 부른다. 화면을 직접 그리는 앱은 YJ.header() /
+   YJ.footer() 가 돌려주는 문자열을 쓴다.
+*/
+window.YJ = (function () {
   "use strict";
 
   /* ============================================================
@@ -115,4 +119,93 @@
       if (btn()) btn().focus();
     }
   });
+
+  /* ============================================================
+     헤더와 푸터
+
+     구조는 두 앱이 똑같다. 다른 것은 YJ.config() 로 받는 값뿐이다.
+     ============================================================ */
+  var cfg = {
+    home: "./",               // 브랜드를 눌렀을 때 갈 곳
+    ko: "한국어",             // 워드마크 가운데 낱말
+    en: "",                   // 영문 병기
+    h1: false,                // 워드마크를 <h1> 로 쌀지 (화면에 다른 h1 이 없을 때만)
+    nav: [],                  // [{ href, key, ko, en }] — key 가 active 와 같으면 현재 위치
+    tagline: { ko: "", en: "" },
+    legal: ""                 // 저작권·면책 문구. 줄바꿈용 <br> 를 허용하므로 날 HTML 이다
+  };
+
+  function config(c) {
+    for (var k in c) if (Object.prototype.hasOwnProperty.call(c, k)) cfg[k] = c[k];
+  }
+
+  function esc(s) {
+    return String(s == null ? "" : s).replace(/[&<>"']/g, function (ch) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[ch];
+    });
+  }
+
+  var MARK = '<svg><use href="#ieung-mark"/></svg>';
+  var WORDMARK = function () {
+    return esc(cfg.ko) + ' <em>with Youjin</em><small>' + esc(cfg.en) + "</small>";
+  };
+
+  function header(active) {
+    var tag = cfg.h1 ? "h1" : "span";
+    var links = cfg.nav.map(function (n) {
+      var on = n.key && n.key === active;
+      return '          <a href="' + esc(n.href) + '"' +
+        (on ? ' class="active" aria-current="page"' : "") + ">" +
+        esc(n.ko) + "<small>" + esc(n.en) + "</small></a>";
+    }).join("\n");
+    return [
+      '<header class="site-header">',
+      '  <div class="site-inner">',
+      '    <a class="brand" href="' + esc(cfg.home) + '" aria-label="' + esc(cfg.ko) + ' with Youjin 홈 / Home">',
+      '      <span class="brand-mark" aria-hidden="true">' + MARK + "</span>",
+      "      <" + tag + ' class="brand-text">' + WORDMARK() + "</" + tag + ">",
+      "    </a>",
+      '    <div class="menu">',
+      '      <button class="menu-btn" type="button" aria-label="메뉴 열기 / Open menu"',
+      '              aria-expanded="false" aria-controls="siteNav">',
+      '        <span class="bars" aria-hidden="true"></span>',
+      "      </button>",
+      '      <nav class="site-nav" id="siteNav" aria-label="메뉴 / Menu" hidden>',
+      links,
+      "      </nav>",
+      "    </div>",
+      "  </div>",
+      "</header>"
+    ].join("\n");
+  }
+
+  /* 푸터에는 저작권 관련 내용만 둔다. 형제 앱 링크는 헤더 메뉴에
+     이미 있어서 겹쳤다. */
+  function footer() {
+    return [
+      '<footer class="site-footer">',
+      '  <div class="site-inner">',
+      '    <div class="foot-brand">',
+      '      <span class="brand-mark sm" aria-hidden="true">' + MARK + "</span>",
+      "      <div>",
+      "        <b>" + esc(cfg.ko) + " <em>with Youjin</em></b>",
+      "        <span>" + esc(cfg.tagline.ko) + "<br>" + esc(cfg.tagline.en) + "</span>",
+      "      </div>",
+      "    </div>",
+      '    <p class="foot-legal">' + cfg.legal + "</p>",
+      '    <p class="foot-copy">© ' + new Date().getFullYear() + " Made by Youjin. All rights reserved.</p>",
+      "  </div>",
+      "</footer>"
+    ].join("\n");
+  }
+
+  /* 정적 페이지용 — 자리표시자를 실제 셸로 바꾼다 */
+  function mount(active) {
+    var h = document.getElementById("siteHeader");
+    if (h) h.outerHTML = header(active);
+    var f = document.getElementById("siteFooter");
+    if (f) f.outerHTML = footer();
+  }
+
+  return { config: config, header: header, footer: footer, mount: mount };
 })();
