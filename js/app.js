@@ -415,4 +415,3 @@ renderMonth();
 renderPanel();
 renderYear();
 startQuiz();
-$("footYear").textContent = new Date().getFullYear();

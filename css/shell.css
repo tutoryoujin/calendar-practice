@@ -3,7 +3,7 @@
 
    원본: korean-cards/shared/shell.css
    고친 뒤  python tools/sync_shared.py  를 돌리면 두 앱에 퍼진다.
-   sha256 aa5e310fff633700
+   sha256 57989a66e5ad2a06
    ──────────────────────────────────────────────────────────── */
 /* 한국어 with Youjin — 모든 앱이 공유하는 상단 바와 꼬리말.
    css/tokens.css 를 먼저 불러야 한다.
@@ -208,24 +208,6 @@
   font-size: 0.95rem;
   font-weight: 800;
 }
-.foot-links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-3);
-}
-.foot-links a {
-  color: var(--ink);
-  text-decoration: none;
-  font-weight: 700;
-  font-size: 0.8rem;
-  padding: var(--space-3) var(--space-5);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-full);
-}
-.foot-links a:hover {
-  border-color: var(--primary);
-  color: var(--primary);
-}
 .foot-legal {
   margin: 0;
   font-size: 0.74rem;
@@ -241,8 +223,7 @@
 /* ---------- 포커스 ---------- */
 .menu-btn:focus-visible,
 .site-nav a:focus-visible,
-.brand:focus-visible,
-.foot-links a:focus-visible {
+.brand:focus-visible {
   outline: 3px solid var(--primary);
   outline-offset: 2px;
 }

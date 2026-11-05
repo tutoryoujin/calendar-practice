@@ -15,30 +15,7 @@
     <link rel="stylesheet" href="css/app.css" />
   </head>
   <body>
-    <header class="site-header">
-      <div class="site-inner">
-        <a class="brand" href="./" aria-label="한국어 달력 with Youjin 홈 / Home">
-          <span class="brand-mark" aria-hidden="true"><svg><use href="#ieung-mark" /></svg></span>
-          <h1 class="brand-text">한국어 달력 <em>with Youjin</em><small>Korean Calendar</small></h1>
-        </a>
-        <div class="menu">
-          <button
-            class="menu-btn"
-            id="menuBtn"
-            type="button"
-            aria-label="메뉴 열기 / Open menu"
-            aria-expanded="false"
-            aria-controls="siteNav"
-          >
-            <span class="bars" aria-hidden="true"></span>
-          </button>
-          <nav class="site-nav" id="siteNav" aria-label="메뉴 / Menu" hidden>
-            <a href="./" class="active" aria-current="page">달력<small>Calendar</small></a>
-            <a href="https://tutoryoujin.github.io/korean-cards/">한국어 카드<small>Korean Cards</small></a>
-          </nav>
-        </div>
-      </div>
-    </header>
+    <div id="siteHeader"></div>
 
     <div class="app">
 
@@ -113,29 +90,11 @@
       </section>
     </div>
 
-    <footer class="site-footer">
-      <div class="site-inner">
-        <div class="foot-brand">
-          <span class="brand-mark sm" aria-hidden="true"><svg><use href="#ieung-mark" /></svg></span>
-          <div>
-            <b>한국어 달력 <em>with Youjin</em></b>
-            <span>날짜 읽기, 매일 조금씩.<br />Read Korean dates, one day at a time.</span>
-          </div>
-        </div>
-        <nav class="foot-links" aria-label="푸터 메뉴 / Footer">
-          <a href="https://tutoryoujin.github.io/korean-cards/">한국어 카드 · Korean Cards</a>
-        </nav>
-        <p class="foot-legal">
-          공휴일은 양력 고정 공휴일만 표시해요. 설날·추석·부처님오신날 같은 음력 공휴일과 대체공휴일은 빠져 있어요.<br />
-          Only fixed solar-calendar holidays are shown. Lunar holidays (Seollal, Chuseok, Buddha’s Birthday) and
-          substitute holidays are not included.
-        </p>
-        <p class="foot-copy">© <span id="footYear"></span> Made by Youjin. All rights reserved.</p>
-      </div>
-    </footer>
+    <div id="siteFooter"></div>
 
     <!-- 공통 셸: 마스코트 도형 주입 + 햄버거. 앱 스크립트보다 먼저. -->
     <script src="js/shell.js"></script>
+    <script src="js/layout.js"></script>
     <script src="js/app.js"></script>
   </body>
 </html>
