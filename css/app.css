@@ -638,15 +638,3 @@ button {
   color: var(--muted);
   font-size: 0.85rem;
 }
-
-@media (min-width: 600px) {
-  .site-footer .site-inner {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    align-items: start;
-  }
-  .foot-legal,
-  .foot-copy {
-    grid-column: 1 / -1;
-  }
-}
