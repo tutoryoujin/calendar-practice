@@ -3,7 +3,7 @@
 
    원본: korean-cards/shared/shell.css
    고친 뒤  python tools/sync_shared.py  를 돌리면 두 앱에 퍼진다.
-   sha256 5278d6971194dda0
+   sha256 aa5e310fff633700
    ──────────────────────────────────────────────────────────── */
 /* 한국어 with Youjin — 모든 앱이 공유하는 상단 바와 꼬리말.
    css/tokens.css 를 먼저 불러야 한다.
@@ -174,6 +174,13 @@
 }
 .site-nav a:hover { background: var(--bg); }
 .site-nav a.active { color: var(--primary); background: var(--bg); }
+
+/* hidden 속성은 UA 스타일시트의 [hidden] { display: none } 으로 동작하는데,
+   작성자 스타일의 display 가 그걸 이긴다. 바로 위에서 display: flex 를
+   줬으므로 hidden 을 걸어도 메뉴가 닫히지 않는다. 명시적으로 다시 적는다. */
+.site-nav[hidden] {
+  display: none;
+}
 
 /* ---------- 꼬리말 ---------- */
 .site-footer {
