@@ -3,14 +3,14 @@
 
    원본: korean-cards/shared/tokens.css
    고친 뒤  python tools/sync_shared.py  를 돌리면 두 앱에 퍼진다.
-   sha256 d9f1e7555b23e2cf
+   sha256 07ae92f7d2aa1b45
    ──────────────────────────────────────────────────────────── */
 /* 한국어 with Youjin — 디자인 시스템 토큰.
 
    shared/tokens.json 에서 tools/sync_shared.py 가 생성한다. 직접 고치지 말 것.
    값을 바꾸려면 디자인 시스템 아티팩트에서 고치고 tokens.json 을 교체한 뒤
    스크립트를 다시 돌린다.
-   https://claude.ai/artifact/C1LfGgisHTtDbmy7NyoUtF
+   https://claude.ai/artifact/CEpgfyaaxJuP8MysgFHWbH
 
    다크는 세 상태를 전부 정의한다. @media 안에만 있는 색이 하나라도 있으면
    사용자가 테마를 직접 고른 순간 그 색만 빠진다. */
@@ -49,6 +49,13 @@
   --ieung-limb: #7f97dd;
   --ieung-face: #1e2742;
   --ieung-blush: #ffd0d2;
+
+  /* 입체 이응 — 테마가 바뀌어도 같은 값이라 라이트 블록에만 있다 */
+  --ieung-light: #dce6fd;
+  --ieung-shade: #7690d8;
+  --ieung-stem-light: #6476e2;
+  --ieung-stem-dark: #3241a8;
+  --ieung-cheek: #ff9fb3;
 
   /* 달력 전용 */
   --sun: #c62f44;
